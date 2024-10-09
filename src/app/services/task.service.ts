@@ -13,21 +13,20 @@ export class TaskService {
   constructor(private http: HttpClient) { }
 
 
-  getTasks() : Observable<Tarefa[]> {
-    return this.http.get<Tarefa[]>(this.apiUrl)
+  getTasks(): Observable<Tarefa[]> {
+    return this.http.get<Tarefa[]>(this.apiUrl);
   }
 
-
-  deleteTasks(tarefa: Tarefa) : Observable<Tarefa>{
-    return this.http.delete<Tarefa>(`${this.apiUrl}/${tarefa.id}`)
+  deleteTask(tarefa: Tarefa): Observable<Tarefa> {
+    return this.http.delete<Tarefa>(`${this.apiUrl}/${tarefa.id}`);
   }
 
-  updateTask(tarefa: Tarefa) : Observable<Tarefa>{
+  updateTask(tarefa: Tarefa): Observable<Tarefa> {
     return this.http.put<Tarefa>(`${this.apiUrl}/${tarefa.id}`, tarefa);
-
   }
 
-  AddTask(tarefa: Tarefa) : Observable<Tarefa> {
-    return this.http.post<Tarefa>(`${this.apiUrl}`, tarefa)
+  AddTask(tarefa: Tarefa): Observable<Tarefa> {
+    return this.http.post<Tarefa>(`${this.apiUrl}`, tarefa);
   }
+
 }

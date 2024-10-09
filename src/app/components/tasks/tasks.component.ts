@@ -1,7 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { TaskService } from '../../services/task.service';
 import { Tarefa } from '../../../Tarefa';
-import { OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TaskItemComponent } from '../task-item/task-item.component';
 import { AddTaskComponent } from '../add-task/add-task.component';
@@ -15,30 +14,34 @@ import { AddTaskComponent } from '../add-task/add-task.component';
 })
 export class TasksComponent implements OnInit {
 
-  tarefas: Tarefa[] = []
+  tarefas: Tarefa[] = [];
 
-  constructor(private taskService: TaskService) {}
+  constructor(private taskService: TaskService) { }
 
   ngOnInit(): void {
 
-    this.taskService.getTasks().subscribe((data) => { this.tarefas = data; console.log(data); });
+    this.taskService.getTasks().subscribe((dado) => {
+      this.tarefas = dado;
+      console.log(dado);
+    });
 
   }
 
-  AddTask( tarefa: Tarefa) {
+  AddTask(tarefa: Tarefa) {
+    this.taskService.AddTask(tarefa).subscribe((tarefa) => {
+      this.tarefas.push(tarefa);
+    });
+  }
 
-    this.taskService.AddTask(tarefa).subscribe((tarefa) => { this.tarefas.push(tarefa);this.tarefas.push(tarefa);})
-
+  deleteTask(tarefa: Tarefa) {
+    this.taskService.deleteTask(tarefa).subscribe(() =>
+      (this.tarefas = this.tarefas.filter((t) => t.id !== tarefa.id)));
   }
 
 
-  deleteTask(tarefa: Tarefa){
-        this.taskService.deleteTasks(tarefa).subscribe(() => {this.tarefas = this.tarefas.filter((t) => t.id !== tarefa.id)});
-  }
-
-
-  toggleConcluido(tarefa: Tarefa){
+  toggleConcluiido(tarefa: Tarefa) {
     tarefa.concluido = !tarefa.concluido;
     this.taskService.updateTask(tarefa).subscribe();
   }
+
 }
