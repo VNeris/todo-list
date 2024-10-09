@@ -39,7 +39,7 @@ export class TasksComponent implements OnInit {
   }
 
 
-  toggleConcluiido(tarefa: Tarefa) {
+  toggleConcluido(tarefa: Tarefa) {
     tarefa.concluido = !tarefa.concluido;
     this.taskService.updateTask(tarefa).subscribe();
   }
